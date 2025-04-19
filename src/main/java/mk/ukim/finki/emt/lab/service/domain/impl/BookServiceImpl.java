@@ -4,12 +4,10 @@ import mk.ukim.finki.emt.lab.model.domain.Book;
 import mk.ukim.finki.emt.lab.model.exceptions.BookNotFoundException;
 import mk.ukim.finki.emt.lab.model.exceptions.InvalidAuthorId;
 import mk.ukim.finki.emt.lab.model.exceptions.UnfilledArgumentsException;
-import mk.ukim.finki.emt.lab.model.views.BooksPerAuthorView;
 import mk.ukim.finki.emt.lab.repository.BookRepository;
 import mk.ukim.finki.emt.lab.repository.BooksPerAuthorViewRepository;
 import mk.ukim.finki.emt.lab.service.domain.AuthorService;
 import mk.ukim.finki.emt.lab.service.domain.BookService;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -11,7 +11,6 @@ import mk.ukim.finki.emt.lab.dto.DisplayAuthorDto;
 import mk.ukim.finki.emt.lab.model.domain.Author;
 import mk.ukim.finki.emt.lab.repository.AuthorRepository;
 import mk.ukim.finki.emt.lab.service.application.AuthorApplicationService;
-import mk.ukim.finki.emt.lab.service.domain.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;

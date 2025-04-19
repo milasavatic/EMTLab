@@ -1,8 +1,6 @@
 package mk.ukim.finki.emt.lab.service.domain;
 
 import mk.ukim.finki.emt.lab.model.domain.Book;
-import mk.ukim.finki.emt.lab.model.domain.Category;
-import mk.ukim.finki.emt.lab.dto.BookDto;
 
 import java.util.List;
 import java.util.Optional;
