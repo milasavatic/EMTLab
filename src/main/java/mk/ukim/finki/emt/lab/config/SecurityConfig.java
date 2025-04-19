@@ -41,31 +41,31 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(
-                        corsConfigurationSource()))
-                .authorizeHttpRequests(requests -> requests.requestMatchers(
-                        "/api/authors",
-                        "/api/books",
-                        "/api/categories",
-                        "/api/countries",
-                        "api/user/login",
-                        "api/user/register"
-                ).permitAll().anyRequest().hasRole("ADMIN"))
-                .formLogin((form) -> form.loginProcessingUrl(
-                                "/api/user/login")
-                        .permitAll()
-                        .failureUrl("/api/user/login?error=BadCredentials")
-                        .defaultSuccessUrl(
-                                "/swagger-ui/index.html",
-                                true
-                        ))
-                .logout((logout) -> logout.logoutUrl("/api/user/logout")
-                        .clearAuthentication(true)
-                        .invalidateHttpSession(
-                                true)
-                        .deleteCookies("JSESSIONID")
-                        .logoutSuccessUrl("/api/user/login"))
-                .exceptionHandling((ex) -> ex.accessDeniedPage(
-                        "/access_denied"));
+                        corsConfigurationSource()));
+//                .authorizeHttpRequests(requests -> requests.requestMatchers(
+//                        "/api/authors",
+//                        "/api/books",
+//                        "/api/categories",
+//                        "/api/countries",
+//                        "api/user/login",
+//                        "api/user/register"
+//                ).permitAll().anyRequest().hasRole("ADMIN"))
+//                .formLogin((form) -> form.loginProcessingUrl(
+//                                "/api/user/login")
+//                        .permitAll()
+//                        .failureUrl("/api/user/login?error=BadCredentials")
+//                        .defaultSuccessUrl(
+//                                "/swagger-ui/index.html",
+//                                true
+//                        ))
+//                .logout((logout) -> logout.logoutUrl("/api/user/logout")
+//                        .clearAuthentication(true)
+//                        .invalidateHttpSession(
+//                                true)
+//                        .deleteCookies("JSESSIONID")
+//                        .logoutSuccessUrl("/api/user/login"))
+//                .exceptionHandling((ex) -> ex.accessDeniedPage(
+//                        "/access_denied"));
         return http.build();
     }
 
