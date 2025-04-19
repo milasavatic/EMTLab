@@ -27,4 +27,6 @@ public interface BookService {
     List<String> allWhoRented(Long id);
 
     Optional<Book> markAsBadCondition(Long id);
+
+    void refreshMaterializedView();
 }

@@ -9,21 +9,29 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import mk.ukim.finki.emt.lab.dto.CreateAuthorDto;
 import mk.ukim.finki.emt.lab.dto.DisplayAuthorDto;
 import mk.ukim.finki.emt.lab.model.domain.Author;
+import mk.ukim.finki.emt.lab.repository.AuthorRepository;
 import mk.ukim.finki.emt.lab.service.application.AuthorApplicationService;
 import mk.ukim.finki.emt.lab.service.domain.AuthorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/authors")
 @Tag(name = "Authors", description = "REST API for managing authors")
 public class AuthorRestController {
     private final AuthorApplicationService authorApplicationService;
+    private final AuthorRepository authorRepository;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
-    public AuthorRestController(AuthorApplicationService authorApplicationService) {
+    public AuthorRestController(AuthorApplicationService authorApplicationService, AuthorRepository authorRepository) {
         this.authorApplicationService = authorApplicationService;
+        this.authorRepository = authorRepository;
     }
 
     @Operation(summary = "Get all authors", description = "Retrieves a list of all authors")
@@ -80,5 +88,18 @@ public class AuthorRestController {
         if (this.authorApplicationService.findById(id).isPresent())
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/by-country")
+    public ResponseEntity<List<Map<String, Object>>> getAuthorsByCountry() {
+        String sql = "SELECT * FROM authors_by_country";
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/names")
+    public ResponseEntity<List<Map<String, String>>> getAuthorsNames() {
+        List<Map<String, String>> authors = authorRepository.findAuthorNames();
+        return ResponseEntity.ok(authors);
     }
 }

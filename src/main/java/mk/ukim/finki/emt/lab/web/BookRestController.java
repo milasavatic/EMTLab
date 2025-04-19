@@ -13,16 +13,21 @@ import mk.ukim.finki.emt.lab.model.domain.Book;
 import mk.ukim.finki.emt.lab.dto.BookDto;
 import mk.ukim.finki.emt.lab.service.application.BookApplicationService;
 import mk.ukim.finki.emt.lab.service.domain.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/books")
 @Tag(name = "Books", description = "REST API for managing books")
 public class BookRestController {
     private final BookApplicationService bookApplicationService;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public BookRestController(BookApplicationService bookApplicationService) {
         this.bookApplicationService = bookApplicationService;
@@ -112,5 +117,12 @@ public class BookRestController {
         return bookApplicationService.markAsBadCondition(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/by-author")
+    public ResponseEntity<List<Map<String, Object>>> getBooksByAuthor() {
+        String sql = "SELECT * FROM books_by_author";
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
+        return ResponseEntity.ok(result);
     }
 }

@@ -4,9 +4,12 @@ import mk.ukim.finki.emt.lab.model.domain.Book;
 import mk.ukim.finki.emt.lab.model.exceptions.BookNotFoundException;
 import mk.ukim.finki.emt.lab.model.exceptions.InvalidAuthorId;
 import mk.ukim.finki.emt.lab.model.exceptions.UnfilledArgumentsException;
+import mk.ukim.finki.emt.lab.model.views.BooksPerAuthorView;
 import mk.ukim.finki.emt.lab.repository.BookRepository;
+import mk.ukim.finki.emt.lab.repository.BooksPerAuthorViewRepository;
 import mk.ukim.finki.emt.lab.service.domain.AuthorService;
 import mk.ukim.finki.emt.lab.service.domain.BookService;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +19,12 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
+    private final BooksPerAuthorViewRepository booksPerAuthorViewRepository;
 
-    public BookServiceImpl(BookRepository bookRepository, AuthorService authorService) {
+    public BookServiceImpl(BookRepository bookRepository, AuthorService authorService, BooksPerAuthorViewRepository booksPerAuthorViewRepository) {
         this.bookRepository = bookRepository;
         this.authorService = authorService;
+        this.booksPerAuthorViewRepository = booksPerAuthorViewRepository;
     }
 
     @Override
@@ -29,14 +34,17 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Optional<Book> save(Book book) {
+        Optional<Book> savedBook = Optional.empty();
         if(book.getName().isEmpty()){
             throw new UnfilledArgumentsException();
         }
         if(this.authorService.findById(book.getAuthor().getId()).isEmpty()){
             throw new InvalidAuthorId(book.getAuthor().getId());
         }
-        return Optional.of(this.bookRepository.save(new Book(book.getName(),
+        savedBook = Optional.of(this.bookRepository.save(new Book(book.getName(),
                 book.getCategory(), authorService.findById(book.getAuthor().getId()).get(), book.getAvailableCopies())));
+        this.refreshMaterializedView();
+        return savedBook;
     }
 
     @Override
@@ -66,7 +74,9 @@ public class BookServiceImpl implements BookService {
                     if(book.getAvailableCopies() != null) {
                         existingBook.setAvailableCopies(book.getAvailableCopies());
                     }
-                    return bookRepository.save(existingBook);
+                    Book updatedBook = this.bookRepository.save(existingBook);
+                    this.refreshMaterializedView();
+                    return updatedBook;
                 });
 
     }
@@ -117,5 +127,10 @@ public class BookServiceImpl implements BookService {
                     }
                     return Optional.of(book);
                 });
+    }
+
+    @Override
+    public void refreshMaterializedView(){
+        booksPerAuthorViewRepository.refreshMaterializedView();
     }
 }

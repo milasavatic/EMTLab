@@ -14,9 +14,11 @@ public class Wishlist {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToMany
+    @JoinColumn(name = "book_id")
     private List<Book> books;
 
     public Wishlist() {

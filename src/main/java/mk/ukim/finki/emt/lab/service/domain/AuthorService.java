@@ -15,4 +15,6 @@ public interface AuthorService {
     Optional<Author> update(Long id, Author author);
 
     void deleteById(Long id);
+
+    void refreshMaterializedView();
 }

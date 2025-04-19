@@ -5,6 +5,7 @@ import mk.ukim.finki.emt.lab.model.exceptions.InvalidAuthorId;
 import mk.ukim.finki.emt.lab.model.exceptions.InvalidCountryId;
 import mk.ukim.finki.emt.lab.model.exceptions.UnfilledArgumentsException;
 import mk.ukim.finki.emt.lab.repository.AuthorRepository;
+import mk.ukim.finki.emt.lab.repository.AuthorsPerCountryViewRepository;
 import mk.ukim.finki.emt.lab.service.domain.AuthorService;
 import mk.ukim.finki.emt.lab.service.domain.CountryService;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,12 @@ import java.util.Optional;
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
     private final CountryService countryService;
+    private final AuthorsPerCountryViewRepository authorsPerCountryViewRepository;
 
-    public AuthorServiceImpl(AuthorRepository authorRepository, CountryService countryService) {
+    public AuthorServiceImpl(AuthorRepository authorRepository, CountryService countryService, AuthorsPerCountryViewRepository authorsPerCountryViewRepository) {
         this.authorRepository = authorRepository;
         this.countryService = countryService;
+        this.authorsPerCountryViewRepository = authorsPerCountryViewRepository;
     }
 
     @Override
@@ -29,14 +32,17 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Optional<Author> save(Author author) {
+        Optional<Author> savedAuthor = Optional.empty();
         if(author.getName().isEmpty() || author.getSurname().isEmpty()) {
             throw new UnfilledArgumentsException();
         }
         if(this.countryService.findById(author.getCountry().getId()).isEmpty()) {
             throw new InvalidCountryId(author.getCountry().getId());
         }
-        return Optional.of(this.authorRepository.save(new Author(author.getName(),
+        savedAuthor = Optional.of(this.authorRepository.save(new Author(author.getName(),
                 author.getSurname(), countryService.findById(author.getCountry().getId()).get())));
+        this.refreshMaterializedView();;
+        return savedAuthor;
     }
 
     @Override
@@ -62,7 +68,9 @@ public class AuthorServiceImpl implements AuthorService {
             if(author.getCountry() != null) {
                 existingAuthor.setCountry(countryService.findById(author.getCountry().getId()).get());
             }
-            return authorRepository.save(existingAuthor);
+            Author updatedAuthor = this.authorRepository.save(existingAuthor);
+            this.refreshMaterializedView();
+            return updatedAuthor;
         });
 
     }
@@ -72,5 +80,10 @@ public class AuthorServiceImpl implements AuthorService {
         if(this.findById(id).isEmpty())
             throw new InvalidAuthorId(id);
         this.authorRepository.deleteById(id);
+    }
+
+    @Override
+    public void refreshMaterializedView(){
+        authorsPerCountryViewRepository.refreshMaterializedView();
     }
 }
