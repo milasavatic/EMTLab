@@ -65,6 +65,7 @@ public class DataInitializer {
         List<Book> books = new ArrayList<>();
         books.add(ham);
         books.add(rom);
+        ws.setCounter(ws.getCounter() + 1);
         books.add(shi);
         Wishlist lib = wishlistRepository.save(new Wishlist(librarian));
         lib.setBooks(books);
@@ -74,6 +75,7 @@ public class DataInitializer {
         books.add(it);
         books.add(nor);
         books.add(aft);
+        hm.setCounter(hm.getCounter() + 1);
         Wishlist usr = wishlistRepository.save(new Wishlist(user));
         usr.setBooks(books);
         wishlistRepository.save(usr);

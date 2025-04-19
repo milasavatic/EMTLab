@@ -1,5 +1,6 @@
 package mk.ukim.finki.emt.lab.service.domain.impl;
 
+import mk.ukim.finki.emt.lab.model.domain.Author;
 import mk.ukim.finki.emt.lab.model.domain.Book;
 import mk.ukim.finki.emt.lab.model.domain.User;
 import mk.ukim.finki.emt.lab.model.domain.Wishlist;
@@ -8,24 +9,26 @@ import mk.ukim.finki.emt.lab.model.exceptions.BookNotFoundException;
 import mk.ukim.finki.emt.lab.model.exceptions.NoAvailableCopies;
 import mk.ukim.finki.emt.lab.model.exceptions.WishlistNotFoundException;
 import mk.ukim.finki.emt.lab.repository.WishlistRepository;
+import mk.ukim.finki.emt.lab.service.domain.AuthorService;
 import mk.ukim.finki.emt.lab.service.domain.BookService;
 import mk.ukim.finki.emt.lab.service.domain.UserService;
 import mk.ukim.finki.emt.lab.service.domain.WishlistService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class WishlistServiceImpl implements WishlistService {
     private final WishlistRepository wishlistRepository;
     private final UserService userService;
     private final BookService bookService;
+    private final AuthorService authorService;
 
-    public WishlistServiceImpl(WishlistRepository wishlistRepository, UserService userService, BookService bookService) {
+    public WishlistServiceImpl(WishlistRepository wishlistRepository, UserService userService, BookService bookService, AuthorService authorService) {
         this.wishlistRepository = wishlistRepository;
         this.userService = userService;
         this.bookService = bookService;
+        this.authorService = authorService;
     }
 
     @Override
@@ -54,6 +57,9 @@ public class WishlistServiceImpl implements WishlistService {
                 throw new NoAvailableCopies(bookId);
             }
             wishlist.getBooks().add(book);
+            Author author = book.getAuthor();
+            author.setCounter(book.getAuthor().getCounter() + 1);
+            authorService.update(author.getId(), author);
             return Optional.of(wishlistRepository.save(wishlist));
         }
         return Optional.empty();
@@ -74,5 +80,18 @@ public class WishlistServiceImpl implements WishlistService {
         });
         wishlist.getBooks().clear();
         wishlistRepository.save(wishlist);
+    }
+
+    @Override
+    public Optional<Map<Integer, String>> booksRentedByAuthor(String username){
+        User user = userService.findByUsername(username);
+        Wishlist wishlist = wishlistRepository.findByUser(user)
+                .orElseThrow(() -> new WishlistNotFoundException("Wishlist not found"));
+        List<Book> allBooks = wishlist.getBooks();
+        Map<Integer, String> popularity = new TreeMap<>();
+        allBooks.forEach(book -> {
+            popularity.put(book.getAuthor().getCounter(), book.getAuthor().getName() + " " + book.getAuthor().getSurname());
+        });
+        return Optional.of(popularity);
     }
 }

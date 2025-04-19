@@ -14,6 +14,7 @@ public class Author {
     String surname;
     @ManyToOne
     Country country;
+    Integer counter;
 
     public Author() {}
 
@@ -21,12 +22,6 @@ public class Author {
         this.name = name;
         this.surname = surname;
         this.country = country;
+        this.counter = 1;
     }
-
-//    public Author(Long id, String name, String surname, Country country) {
-//        this.id = id;
-//        this.name = name;
-//        this.surname = surname;
-//        this.country = country;
-//    }
 }

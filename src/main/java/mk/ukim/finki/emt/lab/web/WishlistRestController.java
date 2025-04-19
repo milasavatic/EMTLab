@@ -6,12 +6,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import mk.ukim.finki.emt.lab.dto.WishlistDto;
+import mk.ukim.finki.emt.lab.model.domain.Author;
 import mk.ukim.finki.emt.lab.model.domain.User;
 import mk.ukim.finki.emt.lab.service.application.WishlistApplicationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/wishlist")
@@ -89,5 +92,23 @@ public class WishlistRestController {
         }
         wishlistApplicationService.rentAllBooksInWishlist(user.getUsername());
         return ResponseEntity.ok("All books in your wishlist have been rented successfully.");
+    }
+
+    @Operation(
+            summary = "Book popularity",
+            description = "Returns book popularity"
+    )
+    @ApiResponses(
+            value = {@ApiResponse(
+                    responseCode = "200",
+                    description = "Popularity retrieved successfully"
+            ), @ApiResponse(responseCode = "404", description = "Wishlist not found")}
+    )
+    @GetMapping("/popularity")
+    public ResponseEntity<Map<Integer, String>> getPopularity(HttpServletRequest req) {
+        String username = req.getRemoteUser();
+        return wishlistApplicationService.booksRentedByAuthor(username)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
