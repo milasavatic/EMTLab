@@ -1,7 +1,7 @@
 package mk.ukim.finki.emt.lab.service.application.impl;
 
-import mk.ukim.finki.emt.lab.dto.CreateBookDto;
-import mk.ukim.finki.emt.lab.dto.DisplayBookDto;
+import mk.ukim.finki.emt.lab.dto.create.CreateBookDto;
+import mk.ukim.finki.emt.lab.dto.display.DisplayBookDto;
 import mk.ukim.finki.emt.lab.model.domain.Author;
 import mk.ukim.finki.emt.lab.model.domain.Book;
 import mk.ukim.finki.emt.lab.model.exceptions.BookNotFoundException;

@@ -2,8 +2,8 @@ package mk.ukim.finki.emt.lab.service.application.impl;
 
 import mk.ukim.finki.emt.lab.dto.LoginResponseDto;
 import mk.ukim.finki.emt.lab.model.domain.User;
-import mk.ukim.finki.emt.lab.dto.CreateUserDto;
-import mk.ukim.finki.emt.lab.dto.DisplayUserDto;
+import mk.ukim.finki.emt.lab.dto.create.CreateUserDto;
+import mk.ukim.finki.emt.lab.dto.display.DisplayUserDto;
 import mk.ukim.finki.emt.lab.dto.LoginUserDto;
 import mk.ukim.finki.emt.lab.security.JwtHelper;
 import mk.ukim.finki.emt.lab.service.application.UserApplicationService;
@@ -42,7 +42,9 @@ public class UserApplicationServiceImpl implements UserApplicationService {
                 loginUserDto.username(),
                 loginUserDto.password()
         );
+
         String token = jwtHelper.generateToken(user);
+
         return Optional.of(new LoginResponseDto(token));
     }
 

@@ -6,12 +6,14 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import mk.ukim.finki.emt.lab.dto.CreateAuthorDto;
-import mk.ukim.finki.emt.lab.dto.DisplayAuthorDto;
+import mk.ukim.finki.emt.lab.dto.create.CreateAuthorDto;
+import mk.ukim.finki.emt.lab.dto.display.DisplayAuthorDto;
 import mk.ukim.finki.emt.lab.model.domain.Author;
 import mk.ukim.finki.emt.lab.repository.AuthorRepository;
 import mk.ukim.finki.emt.lab.service.application.AuthorApplicationService;
+import mk.ukim.finki.emt.lab.service.application.CountryApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +26,11 @@ import java.util.Map;
 @Tag(name = "Authors", description = "REST API for managing authors")
 public class AuthorRestController {
     private final AuthorApplicationService authorApplicationService;
-    private final AuthorRepository authorRepository;
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final CountryApplicationService countryApplicationService;
 
-    public AuthorRestController(AuthorApplicationService authorApplicationService, AuthorRepository authorRepository) {
+    public AuthorRestController(AuthorApplicationService authorApplicationService, CountryApplicationService countryApplicationService) {
         this.authorApplicationService = authorApplicationService;
-        this.authorRepository = authorRepository;
+        this.countryApplicationService = countryApplicationService;
     }
 
     @Operation(summary = "Get all authors", description = "Retrieves a list of all authors")
@@ -89,16 +89,15 @@ public class AuthorRestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/by-country")
-    public ResponseEntity<List<Map<String, Object>>> getAuthorsByCountry() {
-        String sql = "SELECT * FROM authors_by_country";
-        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
-        return ResponseEntity.ok(result);
+    @GetMapping("/per-country")
+    @Operation(summary = "")
+    public ResponseEntity<?> findAllNumberOfAuthorsPerCountry() {
+        return ResponseEntity.status(HttpStatus.OK).body(countryApplicationService.findAllAuthorsPerCountry());
     }
 
-    @GetMapping("/names")
-    public ResponseEntity<List<Map<String, String>>> getAuthorsNames() {
-        List<Map<String, String>> authors = authorRepository.findAuthorNames();
-        return ResponseEntity.ok(authors);
+    @GetMapping("/per-country/{id}")
+    @Operation(summary = "")
+    public ResponseEntity<?> findNumberOfAuthorsPerCountry(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(countryApplicationService.findAuthorsPerCountry(id));
     }
 }

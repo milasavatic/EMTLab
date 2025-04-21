@@ -1,8 +1,8 @@
 package mk.ukim.finki.emt.lab.service.application;
 
-import mk.ukim.finki.emt.lab.dto.CreateCountryDto;
-import mk.ukim.finki.emt.lab.dto.DisplayCountryDto;
-import mk.ukim.finki.emt.lab.model.domain.Country;
+import mk.ukim.finki.emt.lab.dto.create.CreateCountryDto;
+import mk.ukim.finki.emt.lab.dto.display.DisplayCountryDto;
+import mk.ukim.finki.emt.lab.model.views.AuthorsPerCountryView;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,4 +17,10 @@ public interface CountryApplicationService {
     Optional<DisplayCountryDto> update(Long id, CreateCountryDto createCountryDto);
 
     void deleteById(Long id);
+
+    List<AuthorsPerCountryView> findAllAuthorsPerCountry();
+
+    AuthorsPerCountryView findAuthorsPerCountry(Long id);
+
+    void refreshMaterializedView();
 }

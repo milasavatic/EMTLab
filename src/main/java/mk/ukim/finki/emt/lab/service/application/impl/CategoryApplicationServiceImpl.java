@@ -1,8 +1,6 @@
 package mk.ukim.finki.emt.lab.service.application.impl;
 
-import mk.ukim.finki.emt.lab.dto.DisplayAuthorDto;
-import mk.ukim.finki.emt.lab.dto.DisplayCategoryDto;
-import mk.ukim.finki.emt.lab.repository.CategoryRepository;
+import mk.ukim.finki.emt.lab.dto.display.DisplayCategoryDto;
 import mk.ukim.finki.emt.lab.service.application.CategoryApplicationService;
 import mk.ukim.finki.emt.lab.service.domain.CategoryService;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,6 @@
-package mk.ukim.finki.emt.lab.dto;
+package mk.ukim.finki.emt.lab.dto.create;
 
 import mk.ukim.finki.emt.lab.model.domain.Author;
-import mk.ukim.finki.emt.lab.model.domain.Book;
 import mk.ukim.finki.emt.lab.model.domain.Country;
 
 import java.util.List;

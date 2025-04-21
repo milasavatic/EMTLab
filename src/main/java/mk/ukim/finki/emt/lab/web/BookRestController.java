@@ -6,11 +6,13 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import mk.ukim.finki.emt.lab.dto.CreateBookDto;
-import mk.ukim.finki.emt.lab.dto.DisplayBookDto;
+import mk.ukim.finki.emt.lab.dto.create.CreateBookDto;
+import mk.ukim.finki.emt.lab.dto.display.DisplayBookDto;
 import mk.ukim.finki.emt.lab.model.domain.Book;
+import mk.ukim.finki.emt.lab.service.application.AuthorApplicationService;
 import mk.ukim.finki.emt.lab.service.application.BookApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +25,11 @@ import java.util.Map;
 @Tag(name = "Books", description = "REST API for managing books")
 public class BookRestController {
     private final BookApplicationService bookApplicationService;
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final AuthorApplicationService authorApplicationService;
 
-    public BookRestController(BookApplicationService bookApplicationService) {
+    public BookRestController(BookApplicationService bookApplicationService, AuthorApplicationService authorApplicationService) {
         this.bookApplicationService = bookApplicationService;
+        this.authorApplicationService = authorApplicationService;
     }
 
     @Operation(summary = "Get all books", description = "Retrieves a list of all books")
@@ -116,10 +118,15 @@ public class BookRestController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/by-author")
-    public ResponseEntity<List<Map<String, Object>>> getBooksByAuthor() {
-        String sql = "SELECT * FROM books_by_author";
-        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
-        return ResponseEntity.ok(result);
+    @GetMapping("/per-author")
+    @Operation(summary = "List number of books per author for every author")
+    public ResponseEntity<?> findAllNumberOfBooksPerAuthor() {
+        return ResponseEntity.status(HttpStatus.OK).body(authorApplicationService.findAllBooksPerAuthor());
+    }
+
+    @GetMapping("/per-author/{id}")
+    @Operation(summary = "List number of books per author for a given author")
+    public ResponseEntity<?> findNumberOfBooksPerAuthor(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(authorApplicationService.findBooksPerAuthor(id));
     }
 }

@@ -9,7 +9,7 @@ import org.hibernate.annotations.Subselect;
 
 @Data
 @Entity
-@Subselect("SELECT * FROM public.books_per_author")
+@Subselect("SELECT * FROM books_per_author")
 @Immutable
 public class BooksPerAuthorView {
 

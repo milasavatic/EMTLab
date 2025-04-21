@@ -1,6 +1,6 @@
 package mk.ukim.finki.emt.lab.service.application;
 
-import mk.ukim.finki.emt.lab.dto.DisplayBookDto;
+import mk.ukim.finki.emt.lab.dto.display.DisplayBookDto;
 import mk.ukim.finki.emt.lab.dto.WishlistDto;
 
 import java.util.List;

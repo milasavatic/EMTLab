@@ -18,7 +18,9 @@ public class Wishlist {
     private User user;
 
     @ManyToMany
-    @JoinColumn(name = "book_id")
+    @JoinTable(name = "wishlist_books",
+            joinColumns = @JoinColumn(name = "wishlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> books;
 
     public Wishlist() {

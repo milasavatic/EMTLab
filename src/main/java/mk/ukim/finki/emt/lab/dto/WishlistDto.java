@@ -1,5 +1,7 @@
 package mk.ukim.finki.emt.lab.dto;
 
+import mk.ukim.finki.emt.lab.dto.display.DisplayBookDto;
+import mk.ukim.finki.emt.lab.dto.display.DisplayUserDto;
 import mk.ukim.finki.emt.lab.model.domain.Wishlist;
 
 import java.util.List;

@@ -1,10 +1,7 @@
 package mk.ukim.finki.emt.lab.service.application;
 
-import mk.ukim.finki.emt.lab.dto.BookDto;
-import mk.ukim.finki.emt.lab.dto.CreateBookDto;
-import mk.ukim.finki.emt.lab.dto.DisplayBookDto;
-import mk.ukim.finki.emt.lab.model.domain.Book;
-import mk.ukim.finki.emt.lab.model.domain.Category;
+import mk.ukim.finki.emt.lab.dto.create.CreateBookDto;
+import mk.ukim.finki.emt.lab.dto.display.DisplayBookDto;
 
 import java.util.List;
 import java.util.Optional;

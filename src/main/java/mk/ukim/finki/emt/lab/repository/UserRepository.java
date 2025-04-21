@@ -20,14 +20,14 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @EntityGraph(
             type = EntityGraph.EntityGraphType.FETCH,
-            attributePaths = {"books"}
+            attributePaths = {"carts"}
     )
     @Query("select u from User u")
     List<User> fetchAll();
 
     @EntityGraph(
             type = EntityGraph.EntityGraphType.LOAD,
-            attributePaths = {"books"}
+            attributePaths = {"carts"}
     )
     @Query("select u from User u")
     List<User> loadAll();
@@ -36,4 +36,5 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Query("select u.username, u.name, u.surname from User u")
     List<UserProjection> takeUsernameAndNameAndSurnameByProjection();
+
 }

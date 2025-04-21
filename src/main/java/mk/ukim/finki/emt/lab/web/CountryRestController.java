@@ -6,11 +6,10 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import mk.ukim.finki.emt.lab.dto.CreateCountryDto;
-import mk.ukim.finki.emt.lab.dto.DisplayCountryDto;
+import mk.ukim.finki.emt.lab.dto.create.CreateCountryDto;
+import mk.ukim.finki.emt.lab.dto.display.DisplayCountryDto;
 import mk.ukim.finki.emt.lab.model.domain.Country;
 import mk.ukim.finki.emt.lab.service.application.CountryApplicationService;
-import mk.ukim.finki.emt.lab.service.domain.CountryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
