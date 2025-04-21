@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import mk.ukim.finki.emt.lab.dto.create.CreateAuthorDto;
 import mk.ukim.finki.emt.lab.dto.display.DisplayAuthorDto;
 import mk.ukim.finki.emt.lab.model.domain.Author;
+import mk.ukim.finki.emt.lab.model.projections.AuthorNameProjection;
+import mk.ukim.finki.emt.lab.repository.AuthorRepository;
 import mk.ukim.finki.emt.lab.service.application.AuthorApplicationService;
 import mk.ukim.finki.emt.lab.service.application.CountryApplicationService;
 import org.springframework.http.HttpStatus;
@@ -23,10 +25,12 @@ import java.util.List;
 public class AuthorRestController {
     private final AuthorApplicationService authorApplicationService;
     private final CountryApplicationService countryApplicationService;
+    private final AuthorRepository authorRepository;
 
-    public AuthorRestController(AuthorApplicationService authorApplicationService, CountryApplicationService countryApplicationService) {
+    public AuthorRestController(AuthorApplicationService authorApplicationService, CountryApplicationService countryApplicationService, AuthorRepository authorRepository) {
         this.authorApplicationService = authorApplicationService;
         this.countryApplicationService = countryApplicationService;
+        this.authorRepository = authorRepository;
     }
 
     @Operation(summary = "Get all authors", description = "Retrieves a list of all authors")
@@ -108,5 +112,18 @@ public class AuthorRestController {
     )
     public ResponseEntity<?> findNumberOfAuthorsPerCountry(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(countryApplicationService.findAuthorsPerCountry(id));
+    }
+
+    @GetMapping("/names")
+    @Operation(
+            summary = "Get first and last names of all authors",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successfully retrieved author names"),
+                    @ApiResponse(responseCode = "500", description = "Internal server error")
+            }
+    )
+    public ResponseEntity<List<AuthorNameProjection>> getAllAuthorNames() {
+        List<AuthorNameProjection> authorNames = authorRepository.findAllBy();
+        return ResponseEntity.ok(authorNames);
     }
 }
