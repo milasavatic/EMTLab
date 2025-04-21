@@ -85,14 +85,27 @@ public class AuthorRestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/per-country")
-    @Operation(summary = "")
+    @GetMapping("/by-country")
+    @Operation(
+            summary = "Get the total number of authors per country",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successfully retrieved the number of authors per country"),
+                    @ApiResponse(responseCode = "500", description = "Internal server error")
+            }
+    )
     public ResponseEntity<?> findAllNumberOfAuthorsPerCountry() {
         return ResponseEntity.status(HttpStatus.OK).body(countryApplicationService.findAllAuthorsPerCountry());
     }
 
-    @GetMapping("/per-country/{id}")
-    @Operation(summary = "")
+    @GetMapping("/by-country/{id}")
+    @Operation(
+            summary = "Get the number of authors for a specific country by its ID",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Successfully retrieved the number of authors for the specified country"),
+                    @ApiResponse(responseCode = "404", description = "Country not found with the provided ID"),
+                    @ApiResponse(responseCode = "500", description = "Internal server error")
+            }
+    )
     public ResponseEntity<?> findNumberOfAuthorsPerCountry(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(countryApplicationService.findAuthorsPerCountry(id));
     }

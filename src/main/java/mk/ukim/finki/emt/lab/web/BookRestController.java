@@ -115,13 +115,13 @@ public class BookRestController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/per-author")
+    @GetMapping("/by-author")
     @Operation(summary = "List number of books per author for every author")
     public ResponseEntity<?> findAllNumberOfBooksPerAuthor() {
         return ResponseEntity.status(HttpStatus.OK).body(authorApplicationService.findAllBooksPerAuthor());
     }
 
-    @GetMapping("/per-author/{id}")
+    @GetMapping("/by-author/{id}")
     @Operation(summary = "List number of books per author for a given author")
     public ResponseEntity<?> findNumberOfBooksPerAuthor(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(authorApplicationService.findBooksPerAuthor(id));
