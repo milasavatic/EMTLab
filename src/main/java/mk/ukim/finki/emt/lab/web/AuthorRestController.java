@@ -9,17 +9,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import mk.ukim.finki.emt.lab.dto.create.CreateAuthorDto;
 import mk.ukim.finki.emt.lab.dto.display.DisplayAuthorDto;
 import mk.ukim.finki.emt.lab.model.domain.Author;
-import mk.ukim.finki.emt.lab.repository.AuthorRepository;
 import mk.ukim.finki.emt.lab.service.application.AuthorApplicationService;
 import mk.ukim.finki.emt.lab.service.application.CountryApplicationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/authors")

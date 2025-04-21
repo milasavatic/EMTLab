@@ -1,6 +1,5 @@
 package mk.ukim.finki.emt.lab.config;
 
-import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.emt.lab.model.domain.*;
 import mk.ukim.finki.emt.lab.repository.*;
 import org.springframework.security.crypto.password.PasswordEncoder;

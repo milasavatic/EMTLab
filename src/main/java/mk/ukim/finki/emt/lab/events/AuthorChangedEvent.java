@@ -1,6 +1,5 @@
 package mk.ukim.finki.emt.lab.events;
 
-import lombok.Data;
 import lombok.Getter;
 import mk.ukim.finki.emt.lab.model.domain.Author;
 import org.springframework.context.ApplicationEvent;
