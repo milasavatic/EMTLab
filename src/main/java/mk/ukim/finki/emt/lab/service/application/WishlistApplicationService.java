@@ -2,6 +2,7 @@ package mk.ukim.finki.emt.lab.service.application;
 
 import mk.ukim.finki.emt.lab.dto.display.DisplayBookDto;
 import mk.ukim.finki.emt.lab.dto.WishlistDto;
+import mk.ukim.finki.emt.lab.model.views.BooksPerAuthorPerWishlistView;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,10 @@ public interface WishlistApplicationService {
     void rentAllBooksInWishlist(String username);
 
     Optional<Map<Integer, String>> booksRentedByAuthor(String username);
+
+    List<BooksPerAuthorPerWishlistView> findAllBooksPerAuthorPerWishlist();
+
+    BooksPerAuthorPerWishlistView findBooksPerAuthorPerWishlist(Long id);
+
+    void refreshMaterializedView();
 }
