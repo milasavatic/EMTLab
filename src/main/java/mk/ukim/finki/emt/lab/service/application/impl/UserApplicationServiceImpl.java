@@ -5,7 +5,7 @@ import mk.ukim.finki.emt.lab.model.domain.User;
 import mk.ukim.finki.emt.lab.dto.create.CreateUserDto;
 import mk.ukim.finki.emt.lab.dto.display.DisplayUserDto;
 import mk.ukim.finki.emt.lab.dto.LoginUserDto;
-import mk.ukim.finki.emt.lab.security.JwtHelper;
+import mk.ukim.finki.emt.lab.helpers.JwtHelper;
 import mk.ukim.finki.emt.lab.service.application.UserApplicationService;
 import mk.ukim.finki.emt.lab.service.domain.UserService;
 import org.springframework.stereotype.Service;

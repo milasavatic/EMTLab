@@ -2,12 +2,16 @@ package mk.ukim.finki.emt.lab.service.application;
 
 import mk.ukim.finki.emt.lab.dto.create.CreateBookDto;
 import mk.ukim.finki.emt.lab.dto.display.DisplayBookDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface BookApplicationService {
     List<DisplayBookDto> findAll();
+
+    Page<DisplayBookDto> findAll(Pageable pageable);
 
     //Optional<DisplayBookDto> save(String name, Category category, Long authorId, Integer availableCopies);
 

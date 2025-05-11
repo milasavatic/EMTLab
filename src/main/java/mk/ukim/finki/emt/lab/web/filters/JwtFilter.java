@@ -1,4 +1,4 @@
-package mk.ukim.finki.emt.lab.security;
+package mk.ukim.finki.emt.lab.web.filters;
 
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
@@ -6,6 +6,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
+import mk.ukim.finki.emt.lab.constants.JwtConstants;
+import mk.ukim.finki.emt.lab.helpers.JwtHelper;
 import mk.ukim.finki.emt.lab.model.domain.User;
 import mk.ukim.finki.emt.lab.service.domain.UserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

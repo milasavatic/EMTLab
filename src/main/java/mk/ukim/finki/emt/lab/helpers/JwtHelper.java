@@ -1,8 +1,9 @@
-package mk.ukim.finki.emt.lab.security;
+package mk.ukim.finki.emt.lab.helpers;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import mk.ukim.finki.emt.lab.constants.JwtConstants;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 

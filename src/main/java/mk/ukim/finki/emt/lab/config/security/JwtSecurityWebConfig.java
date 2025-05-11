@@ -1,6 +1,7 @@
-package mk.ukim.finki.emt.lab.security;
+package mk.ukim.finki.emt.lab.config.security;
 
-import mk.ukim.finki.emt.lab.config.CustomUsernamePasswordAuthenticationProvider;
+import mk.ukim.finki.emt.lab.security.CustomUsernamePasswordAuthenticationProvider;
+import mk.ukim.finki.emt.lab.web.filters.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;

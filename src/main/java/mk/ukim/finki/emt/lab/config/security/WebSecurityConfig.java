@@ -1,5 +1,6 @@
-package mk.ukim.finki.emt.lab.config;
+package mk.ukim.finki.emt.lab.config.security;
 
+import mk.ukim.finki.emt.lab.security.CustomUsernamePasswordAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -20,10 +21,10 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfig {
+public class WebSecurityConfig {
     private final CustomUsernamePasswordAuthenticationProvider authenticationProvider;
 
-    public SecurityConfig(CustomUsernamePasswordAuthenticationProvider authenticationProvider) {
+    public WebSecurityConfig(CustomUsernamePasswordAuthenticationProvider authenticationProvider) {
         this.authenticationProvider = authenticationProvider;
     }
 

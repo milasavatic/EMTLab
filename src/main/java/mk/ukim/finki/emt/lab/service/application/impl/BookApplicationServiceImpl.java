@@ -9,6 +9,8 @@ import mk.ukim.finki.emt.lab.model.exceptions.InvalidAuthorId;
 import mk.ukim.finki.emt.lab.service.application.BookApplicationService;
 import mk.ukim.finki.emt.lab.service.domain.AuthorService;
 import mk.ukim.finki.emt.lab.service.domain.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +29,12 @@ public class BookApplicationServiceImpl implements BookApplicationService {
     @Override
     public List<DisplayBookDto> findAll() {
         return this.bookService.findAll().stream().map(DisplayBookDto::from).toList();
+    }
+
+    @Override
+    public Page<DisplayBookDto> findAll(Pageable pageable) {
+        return bookService.findAll(pageable)
+                .map(DisplayBookDto::from);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package mk.ukim.finki.emt.lab.config;
+package mk.ukim.finki.emt.lab.config.init;
 
 import mk.ukim.finki.emt.lab.model.domain.*;
 import mk.ukim.finki.emt.lab.repository.*;

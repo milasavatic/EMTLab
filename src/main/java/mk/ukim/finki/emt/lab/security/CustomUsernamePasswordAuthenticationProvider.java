@@ -1,4 +1,4 @@
-package mk.ukim.finki.emt.lab.config;
+package mk.ukim.finki.emt.lab.security;
 
 import mk.ukim.finki.emt.lab.service.domain.impl.UserServiceImpl;
 import org.springframework.context.annotation.Lazy;

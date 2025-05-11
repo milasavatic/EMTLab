@@ -1,4 +1,4 @@
-package mk.ukim.finki.emt.lab.web;
+package mk.ukim.finki.emt.lab.web.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -11,6 +11,8 @@ import mk.ukim.finki.emt.lab.dto.display.DisplayBookDto;
 import mk.ukim.finki.emt.lab.model.domain.Book;
 import mk.ukim.finki.emt.lab.service.application.AuthorApplicationService;
 import mk.ukim.finki.emt.lab.service.application.BookApplicationService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +36,12 @@ public class BookRestController {
     public List<DisplayBookDto> findAll() {
         return this.bookApplicationService.findAll();
     }
+
+    @GetMapping("/paginated")
+    public ResponseEntity<Page<DisplayBookDto>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(bookApplicationService.findAll(pageable));
+    }
+
 
     @Operation(summary = "Get book by ID", description = "Finds a book by its unique ID",
             responses = {
