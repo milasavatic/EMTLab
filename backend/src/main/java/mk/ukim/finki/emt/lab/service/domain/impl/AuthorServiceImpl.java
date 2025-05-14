@@ -43,7 +43,7 @@ public class AuthorServiceImpl implements AuthorService {
             savedAuthor = Optional.of(this.authorRepository.save(new Author(author.getName(),
                     author.getSurname(), countryService.findById(author.getCountry().getId()).get())));
         }
-        this.refreshMaterializedView();;
+        this.refreshMaterializedView();
         return savedAuthor;
     }
 

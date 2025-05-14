@@ -1,6 +1,5 @@
 package mk.ukim.finki.emt.lab.service.domain.impl;
 
-import mk.ukim.finki.emt.lab.model.domain.Author;
 import mk.ukim.finki.emt.lab.model.domain.Country;
 import mk.ukim.finki.emt.lab.model.exceptions.InvalidCountryId;
 import mk.ukim.finki.emt.lab.model.exceptions.UnfilledArgumentsException;

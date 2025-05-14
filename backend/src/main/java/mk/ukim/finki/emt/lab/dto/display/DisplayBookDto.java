@@ -1,6 +1,5 @@
 package mk.ukim.finki.emt.lab.dto.display;
 
-import mk.ukim.finki.emt.lab.model.domain.Author;
 import mk.ukim.finki.emt.lab.model.domain.Book;
 import mk.ukim.finki.emt.lab.model.domain.Category;
 
