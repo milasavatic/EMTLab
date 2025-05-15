@@ -32,7 +32,7 @@ const EditAuthorDialog = ({open, onClose, author, onEdit}) => {
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Add Author</DialogTitle>
+            <DialogTitle>Edit Author</DialogTitle>
             <DialogContent>
                 <TextField
                     margin="dense"

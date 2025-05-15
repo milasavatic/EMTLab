@@ -49,7 +49,7 @@ const EditBookDialog = ({open, onClose, book, onEdit}) => {
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Add Book</DialogTitle>
+            <DialogTitle>Edit Book</DialogTitle>
             <DialogContent>
                 <TextField
                     margin="dense"

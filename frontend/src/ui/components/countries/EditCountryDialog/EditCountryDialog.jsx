@@ -27,7 +27,7 @@ const EditCountryDialog = ({open, onClose, country, onEdit}) => {
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Add Country</DialogTitle>
+            <DialogTitle>Edit Country</DialogTitle>
             <DialogContent>
                 <TextField
                     margin="dense"
